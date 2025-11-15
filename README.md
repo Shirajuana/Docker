@@ -94,6 +94,11 @@ Download from: https://www.docker.com/products/docker-desktop
 ```
 docker --version
 ```
+# Pulling from Docker 
+Pull the image from Docker Hub: 
+``` 
+docker pull shirajuana/django-app:latest.
+```
 
 # Running the PSUSphere Application
 ### Method 1: Using Docker Compose (Recommended)
