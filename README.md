@@ -61,20 +61,83 @@ This documentation covers the complete process of Dockerizing Django application
 | **Docker Compose** | Multi-service management | Simplified orchestration |
 | **Docker Hub** | Image registry | Centralized distribution |
 
-### 🌟 Problem-Solution Approach
+# Instructions on how to run the program
+### Prerequisites
+1. System Requirements
+- **Windows 10/11** (64-bit) or **macOS** or **Linux**
+- At least **4GB RAM**
+- **Virtualization enabled** in BIOS
 
-**Common Development Challenges**:
-- ❌ "It works on my machine" syndrome
-- ❌ Inconsistent dependency versions
-- ❌ Complex environment setup procedures
-- ❌ Deployment configuration mismatches
+### 2. Enable Virtualization (Windows)
+1. Restart your computer
+2. Press **F2, F10, Delete, or Esc** during startup (varies by manufacturer)
+3. Find **"Virtualization Technology"** or **"Intel VT-x"** or **"AMD-V"**
+4. **Enable** it and save changes
 
-**Docker Solutions**:
-- ✅ Identical environments across all systems
-- ✅ Precise dependency locking
-- ✅ Single-command setup and deployment
-- ✅ Configuration as code
+### 3. Install WSL 2 (Windows Only)
+```
+wsl --install
+wsl --set-default-version 2
+```
 
+# Docker Installation
+1. Install Docker Desktop
+Download from: https://www.docker.com/products/docker-desktop
+
+    Run the installer
+
+    Check "Use WSL 2 instead of Hyper-V" (recommended)
+
+    Complete installation and restart when prompted
+
+2. Verify Installation
+```
+docker --version
+```
+
+# Running the PSUSphere Application
+### Method 1: Using Docker Compose (Recommended)
+Step 1: Create Project Folder
+
+```
+mkdir psusphere-client
+cd psusphere-client
+```
+
+### Step 2: Create docker-compose.yml
+Create a file named docker-compose.yml with this content:
+```
+version: '3.8'
+
+services:
+  web:
+    image: shirajuana/django-app:latest # Note: 'image' not 'build'
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+    - "8000:8000"
+    volumes:
+    - django_data:/app
+    environment:
+    - DEBUG=1
+    - USE_SQLITE=true
+    - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+    - SITE_ID=4
+volumes:
+  django_data:
+```
+### Step 3: Run the Application
+```
+docker-compose up -d
+```
+
+### Step 4: Verify it's Running
+```
+docker-compose ps
+```
+
+# Accessing the Application
+### Open Web Browser
+Navigate to: http://localhost:8000
 ## 🎯 Use Cases
 
 ### 💻 Development Teams
@@ -119,7 +182,7 @@ This documentation covers the complete process of Dockerizing Django application
             <img src="https://github.com/Shirajuana.png" width="120" height="120" style="border-radius: 50%; border: 3px solid #fff;">
         </a>
     </div>
-    <h3 style="text-align: center; margin-top: 15px; color: white;">SHEILA MAE VELUYA (Collaborator)</h3>
+    <h3 style="text-align: center; margin-top: 15px; color: white;">SHEILA MAE VELUYA (Owner)</h3>
     <p style="text-align: center; margin: 10px 0; color: #ccc;">
         <strong>Email:</strong> 202380038@psu.palawan.edu.ph
     </p>
@@ -139,7 +202,7 @@ This documentation covers the complete process of Dockerizing Django application
             <img src="https://github.com/Erlybird21.png" width="120" height="120" style="border-radius: 50%; border: 3px solid #fff;">
         </a>
     </div>
-    <h3 style="text-align: center; margin-top: 15px; color: white;">ERL JOSEPH MANGUBAT (Owner)</h3>
+    <h3 style="text-align: center; margin-top: 15px; color: white;">ERL JOSEPH MANGUBAT (Collaborator)</h3>
     <p style="text-align: center; margin: 10px 0; color: #ccc;">
         <strong>Email:</strong> 202380004@psu.palawan.edu.ph
     </p>
